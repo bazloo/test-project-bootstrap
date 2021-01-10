@@ -1,0 +1,756 @@
+
+/*Небольшое разъяснение по проекту.
+
+Я реализовал все необходимые скрипты. 
+Подключил сторонние плагины для добавления на страницу галереи, прокрутки "карусели"
+ и эффекта параллакса. 
+Также нашел и отредактировал готовый js скрипт для реализации кнопки "back to the top" .
+Вся верстка максимально адаптивна насколько это целесообразно для тестового проекта.
+На реальном проекте  я бы еще добавил прокрутку элементов с помощью слайдера,
+чтобы уменьшить длину страницы и упростить навигацию при небольшом viewport. 
+Но это потребовало бы немного больше времени и, как я считаю,  для ТЗ необязательно.
+Я старался максимально приблизится к дизайну предоставленного макета.
+Есть только несколько элементов которые немного отличаются.
+У элементов collapse ("аккордеон") я не сделал кнопки +/-, так как их реализация 
+потребовала бы больше времени, а я хотел вложиться в сроки отведенные на этот проект.
+Также, не сделал круглый фон у иконок -- логотипов соц. сетей, так как предоставленный иконочный шрифт
+не содержит необходимы символы, хоть я и добавил альтернативный шрифт, но реализация на нем все равно бы отняла больше времени.
+Спасибо за возможность попрактиковаться в верстке и за потраченное время на проверку этого задания.
+Мне понравилось работать над этим макетом. Думаю, что следующий подобный шаблон я сверстал бы в два раза быстрее.
+
+С уважением,  Роман Панченко.*/
+
+
+/*------------------------IMPORT OF FONT AND APPLY GLOBAL VALUES--------------*/
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;900&display=swap');
+a:hover, a:visited, a:link, a:active{
+    text-decoration: none;
+}
+
+body {
+  background-color: white;
+  font-family: 'Lato', sans-serif;
+  overflow-x: hidden;
+}
+/*----------------------------------ALL SUB-TITLES-----------------------------*/
+h2 {
+  margin-bottom: 2rem;
+  font-size: 2.8rem;
+  
+}
+/*----------------------------------BACK TO TOP BUTTON-------------------------*/
+#scrollingToTop-btn {
+  display: inline-block;
+  position: fixed;
+  bottom: 50px;
+  right: 50px;
+  text-align: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  background-color: #5dbdfe;
+  color: #ffffff;
+  z-index: 1000;
+  animation: go-to-top 3s infinite;
+  visibility: hidden;
+  opacity: 0;
+}
+@media all and (max-width: 720px) {
+  #scrollingToTop-btn i {
+   font-size: 80px;
+  }
+}
+#scrollingToTop-btn {
+  opacity: 1;
+  visibility: visible;
+}
+#scrollingToTop-btn i {
+  line-height: 80px;
+  transition: 1s;
+  animation: arrow 1s infinite;
+}
+#scrollingToTop-btn:hover {
+  cursor: pointer;
+  
+}
+/*------------------------------ANIMATION FOR BUTTON--------------------*/
+@keyframes go-to-top {
+0% {
+  box-shadow: 0px 0px 5px 0px #AEECEF;
+  background-color: #5dbdfe;
+}
+
+50% {
+  box-shadow: 0px 0px 10x 0px #AEECEF;
+  background-color: #76c6fc;
+}
+
+100% {
+  box-shadow: 0px 0px 15px 0px #AEECEF;
+  background-color: #7dc8fa;
+}
+}
+
+@keyframes arrow {
+  from {
+    transform: scale(1.2);
+  }
+
+  to {
+    transform: scale(1);
+  }
+  }
+
+/*-------------------------------------HEADER-------------------------------*/  
+header {
+    position: relative;
+    background-color: black;
+    height: 100%;
+    min-height: 25rem;
+    width: 100%;
+    overflow: hidden;
+    z-index: 1;
+    
+}
+header .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: black;
+    opacity: 0.3;
+    z-index: 1;
+    
+}
+.navbar {
+    z-index: 3;
+    font-size: 1.2em;
+    border-bottom: 1px solid rgba(252, 252, 252, 0.199);
+}    
+.navbar-toggler-icon {
+margin-bottom: 0;
+}
+
+.navbar-nav > li{
+  padding-left: 2rem;
+  
+}
+
+.navbar-wrapper {
+  height: fit-content;
+} 
+  
+.navbar-brand {
+    text-transform: uppercase;
+    font-weight: 300;
+    /* Уствновил размер шрифта navbar-brand в vw, чтобы его размер адаптировался 
+    при меньшем viewport и на мобильной версии toggler не выталкивался на следующую троку.
+    */
+    font-size: 4vw;
+    line-height: 4vw;
+}
+.navbar-brand span {
+  font-weight: 900;
+} 
+/*---------------------------------VIDEO-BACKGROUND---------------------------*/
+header video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    z-index: 0;
+    -ms-transform: translateX(-50%) translateY(-50%);
+    -moz-transform: translateX(-50%) translateY(-50%);
+    -webkit-transform: translateX(-50%) translateY(-50%);
+    transform: translateX(-50%) translateY(-50%);
+  }
+  .main-title {
+    z-index: 1;
+    position: relative;
+    text-align: center;
+    color: white;
+    
+  }
+/*-----------------------------------MAIN TITLE-------------------------*/
+  h1 {
+    display: inline-block;
+    font-size: 7vw;
+    font-weight: 300;
+    margin-top: 1rem;
+    line-height: 6vw;
+  }
+  @media all and (max-width: 720px) {
+
+    h1 {
+      font-size: 9vw;
+      line-height: 9vw;
+      margin-top: 6vw;
+    }
+
+    .navbar-brand {
+      
+      font-size: 6vw;
+      line-height: 4vw;
+  }
+  }
+  h1 span {
+    font-size: 2rem;
+    font-weight: 400;
+  }
+  /*---------------------------------SUBMIT FORM----------------------------*/
+  #submit-form {
+    margin-top: 6vw;
+    padding: 1rem 2rem;
+    background-color: #d8d7d6;
+    height: 315px;
+    margin-bottom: 100px;
+    z-index: 3;
+    box-shadow: 1px 1px 13px rgba(0, 0, 0, 0.3);
+    border-radius: 3px;
+  }  
+
+  #submit-form input {
+    border: 1px solid #cccac9;
+    width: 100%;
+    height: 3rem;
+    background-color: #efefee;
+    border-radius: 3px;
+    padding: 5%;
+  }
+  #submit-form label {
+    width: 100%;
+    height: 0;
+    margin-top: 1.4rem;
+    
+  }
+  .btn-info {
+    margin-top: 1.4rem;
+    width: 100%;
+    height: 4rem;
+    border-radius: 3px;
+    border: none;
+    background-color:#5dbdfe;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.3);
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  
+/*-------------------------------MAIN SECTION------------------------------*/
+
+main {
+  
+  color: #333333;
+  
+}
+
+/*-------------------------------ABOUT US SECTION--------------------------*/
+#about-us {
+  padding-top: 6rem;
+  
+  z-index: 3;
+  position: relative;
+  height:fit-content;
+  background-color: white;
+}
+
+.offers{
+  padding-bottom: 4rem;
+}
+
+.section-text {
+  opacity: 0.6;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 2rem;
+  
+}
+
+/*---------------------------------FEATURES SECTION---------------------------*/
+
+.jumbotron {
+  padding-bottom: 6vw;
+  border-radius: 0;
+}
+
+/*Применяю flex к обертке, для того чтобы расположить элементы как это необходимо */
+
+.block-wrapper {
+  position: relative;
+  display: flex;
+  margin-top: 80px;
+  text-align: left;
+}
+@media all and (max-width: 992px) {
+  .block-wrapper i {
+    display: block;
+    font-size: 70px ;   
+    margin-right: 10px;
+  }
+}
+.icon-wrapper {
+  display: block;
+  position: relative;
+}
+
+.round-icon {
+  position: relative;
+  left: 5%;
+  display: inline-block;
+  text-align: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  background-color: #5dbdfe;
+  color: #ffffff;
+  margin: auto;
+  margin-bottom: 2rem;
+
+}
+@media all and (max-width: 576px) {
+  .round-icon {
+    text-align: center;
+    width: 57px;
+    height: 57px;
+    left: -5px;
+  }
+  .round-icon .material-icons {
+    font-size: 57px;
+    line-height: 57px;
+    margin-right: -1px;
+    margin-top: -10px;
+  }
+  
+  
+}
+@media all and (max-width: 720px) {
+  .round-icon {
+    text-align: center;
+    width: 57px;
+    height: 57px;
+    
+  }
+  .round-icon .material-icons {
+    font-size: 57px;
+    line-height: 57px;
+    margin-right: -1px;
+    margin-top: -10px;
+  }
+  
+}
+
+.round-icon .material-icons {
+  font-size: 3rem;
+  line-height: 80px;
+}
+
+
+
+.block-title {
+  margin-bottom: 1rem;
+  font-weight: 400;
+  font-size: 1.4rem;
+}
+
+
+
+.block-description{
+  margin-left: 1.5rem;
+}
+
+#features {
+  padding-top: 6rem;
+  
+  
+  height: fit-content;
+  margin-bottom: 0;
+}
+.features-image {
+  position: absolute;
+  left: 27%;
+  height: 100%;
+  width: auto;
+  z-index: 3;
+  bottom: -6vw;
+}
+.rectangle {
+  position: absolute;
+  top: 65%;
+  left: 50%;
+  margin-top: -200px;
+  margin-left: -175px;
+  width: 400px;
+  height: 350px;
+  background: linear-gradient(90deg, 
+  #f34235 50%, #5dbdfe 50%);
+  
+}
+#features .material-icons {
+  opacity: 0.2;
+}
+@media all and (max-width: 992px) {
+  .special-margin {
+    margin-top: 6vw;
+  }
+  .features-image {
+    position: relative;
+    height: 400px;
+    width: auto;
+    z-index: 3;
+    left: 20%;
+  }
+
+  .rectangle {
+    
+    position: absolute;
+    visibility: hidden;
+    
+  }
+  .bg-for-small-size {
+       
+    background: linear-gradient(90deg, 
+  #f34235 50%, #5dbdfe 50%);
+  
+  }
+}
+
+/*------------------------------------ADVANTAGES-----------------------------*/
+#advantages {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  color: white;
+  background-color: #f34235;
+}
+.advantages-wrapper {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-top: 80px;
+  text-align: center;
+  left: -5%
+}
+.advantages-title {
+  display: inline-block;
+  margin-bottom: 1rem;
+  font-weight: 400;
+  font-size: 1.4rem;
+}
+@media all and (max-width: 720px) {
+  .advantages-title {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+    
+    
+  }
+  
+}
+
+.number-in-circle {
+  position: relative;
+  left: 5%;
+  display: inline-block;
+  text-align: center;
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  background-color: white;
+  color: #f34235;
+  margin: auto;
+  font-size: 3rem;
+  font-weight: 400;
+  line-height: 80px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-bottom: 2rem;
+}
+/*-----------------------------------TESTIMONIALS------------------------------*/
+#testimonials {
+  padding-top: 6rem;
+  background-color: #f1f1f1;
+}
+
+.flex-container {
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.flex-container div,span {
+  margin-bottom: 2rem;
+}
+
+.dots-item {
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+  background-color: #333333;;
+  border-radius: 100%;
+}
+.dots-item-unable {
+  display: inline-block;
+  height: 8px;
+  width: 8px;
+  background-color: #333333;;
+  border-radius: 100%;
+  opacity: 50%;
+}
+/*---------------------------------------OUR TEAM------------------------------*/
+#our-team {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  background-color: white;
+  z-index: 2;
+}
+.heading {
+  
+  font-size: 2.8rem;
+  
+}
+.member-description {
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: column;
+  
+}
+
+.member-name{
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-weight: 400;
+  font-size: 1.4rem;
+}
+.position {
+  color: #72c5fe;
+  font-weight: 700;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+.member-info {
+  opacity: 0.8;
+  color: #333333;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+}
+
+/*---------------------------------------FAQ--------------------------------*/
+#faq {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+  
+}
+
+
+.custom-btn {
+  margin-top: 1.8rem;
+  display: inline-block;
+  line-height: 4rem;
+  padding-left: 3%;
+  height: 4rem;
+  width: 100%;
+  background-color: #ff4538;
+  text-decoration: none;
+  box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 3px;
+  color: white
+  
+}
+
+.custom-btn:hover {
+  border-radius: 3px 3px 0 0 ;
+  border-bottom: 1px solid  #ff4538;
+  color: white
+  
+}
+.card {
+  background-color: #ff4538;
+  color: white;
+  border: 0;
+  border-top: 0;
+  border-radius: 0 0 3px 3px;
+}
+
+/*----------------------------------HOW IT WORKS SECTION--------------------------------*/
+#how-it-works {
+  padding-top: 6rem;
+}
+
+.blue-text {
+  color: #5dbdfe;
+  font-weight: 700;
+}
+
+#gallery {
+  z-index: 3;
+}
+.img-wrapper {
+  position: relative;
+  margin-top: 4rem;
+  overflow: hidden;
+}  
+
+.img-wrapper a {
+  display: block;
+}
+.img-wrapper a:hover {
+
+  transform: scale(1.2);
+}
+.img-wrapper img {
+  width: 100%;
+  height: auto;
+}
+@media all and (max-width: 720px) {
+  .img-wrapper {
+    margin-top: 0;
+    
+  }
+  .heading {
+    margin-top: 1rem;
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+/*----------------------------------LATEST FROM THE BLOG----------------------------*/
+
+#latest {
+  padding-top: 6rem;
+  padding-bottom: 7rem;
+  background-color: #f1f1f1;
+}
+#latest p {
+
+margin-top: 2rem;
+opacity: 0.8;
+color: #333333;
+font-size: 20px;
+font-weight: 700;
+}
+.slide-wrapper {
+  
+  margin-top: 4rem;
+  position: relative;
+  overflow: hidden;
+  height: 350px;
+  width: 570px;
+  
+}
+
+/*----------------------------------------OUR PARTNERS---------------------------*/
+#our-partners {
+  padding-top: 7rem;
+  
+  background-color: white;
+}
+.partners-logo {
+  position: relative;
+  margin-top: 4rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+@media all and (max-width: 720px) {
+  .partners-logo {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+  }
+  .logo-item {
+    display: inline;
+    
+  }
+}
+/*----------------------------------------FOOTER---------------------------------*/
+
+footer{
+  margin-top: 7rem;
+  padding-top: 7rem;
+  background-color: #2c2c2c;
+  color: white;
+}
+.contacts-wrapper {
+  margin-bottom: 2rem;
+}
+.contacts {
+  margin-top: 4rem;
+  font-size: 20px;
+  font-weight: 700;
+}
+.phone{
+  font-weight: 400;
+}
+/*---------------------------------SOCIAL-NETWORK LINKS--------------------------------*/
+
+.social {
+  margin: 2vw auto;
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 4vw;
+}
+
+.fa-facebook {
+  color: #3b579d;
+}
+.fa-twitter {
+  color: #5ea9dd;
+}
+.fa-google-plus {
+  color: #df4a32;
+}
+.copyright {
+  margin-top: 2rem;
+  font-size: 14px;
+  font-weight: 400;
+  opacity: 0.1;
+}
+.map-responsive{
+  overflow:hidden;
+  padding-bottom: 33%;
+  position:relative;
+  height:0;
+  filter: grayscale(100%);
+  
+ }
+
+.map-responsive iframe{
+  opacity: 60%;
+  filter: invert(100%);
+  left:0;
+  top:0;
+  height:440px;
+  width:100%;
+  position: absolute;
+}
+@media all and (max-width: 720px) {
+  .youtube-video {
+    
+    margin: auto;
+    width: 100%;
+    
+  }
+  .social {
+    font-size: 8vw;    
+  }
+ }
+@media all and (max-width: 992px) {
+  
+  .block-description, .member-info, .section-text {
+    display: inline-block;
+    text-align: justify;
+    width: 80%;
+    margin-right: auto;
+    margin-left: auto;
+  }
+  .social {
+    font-size: 6vw;    
+  }
+  
+}
+
+
