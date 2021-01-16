@@ -1,5 +1,5 @@
 # Test-project-bootstrap
-Web-template that I wrote as a technical inquiry for dev-company.
+Web-template that I coded as a test project for IT-company.
 
 # The tasks were:
 <ul>
@@ -14,4 +14,4 @@ Web-template that I wrote as a technical inquiry for dev-company.
 </ul>
 
 # All done
-See the resul here -- https://bazloo.github.io/test-project-bootstrap/
+Check the resul here -- https://bazloo.github.io/test-project-bootstrap/
